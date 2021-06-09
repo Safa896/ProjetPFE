@@ -24,11 +24,13 @@ import {useHistory } from "react-router-dom";
 export const ModificationQuestion = (props) => {
   const [Responses, setResponses] = useState([]);
   const [showDefault, setShowDefault] = useState(false);
-  const handleClose = () => setShowDefault(false);
-  const [question, setquestion] = useState(props.question1);
+  const handleClose = () => window.location.reload();
+
+  const [question, setquestion] = useState(props.SingleQuestion);
   const [Response, setResponse] = useState([]);
-  let username = props.question1.creator;
+  let username = props.SingleQuestion.creator;
   let History = useHistory ();
+
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
        <ToastContainer />
@@ -349,7 +351,7 @@ export const ModificationQuestion = (props) => {
                       });
                   });
                   toast.success("Question modifiée avec succès "); 
-                  window.location.reload()
+                //  window.location.reload()
               }}
             >
               Modifier

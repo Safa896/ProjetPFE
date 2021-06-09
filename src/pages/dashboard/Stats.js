@@ -1,8 +1,8 @@
 
 import React,{useState,useEffect} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBiking, faCashRegister, faChartLine, faCloudUploadAlt, faCoffee, faFilm, faHotel, faPlus, faRocket, faTasks, faUserShield, faUtensils } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Button, Dropdown, ButtonGroup } from '@themesberg/react-bootstrap';
+import { faBiking, faCashRegister, faHome,faChartLine, faCloudUploadAlt, faCoffee, faFilm, faHotel, faPlus, faRocket, faTasks, faUserShield, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { Col, Row, Button, Dropdown, ButtonGroup , Breadcrumb } from '@themesberg/react-bootstrap';
 import VerticalBarGraph from '@chartiful/react-vertical-bar-graph'
 import { CounterWidget, CircleChartWidget, BarChartWidget, TeamMembersWidget, ProgressTrackWidget, RankingWidget, SalesValueWidget, SalesValueWidgetPhone, AcquisitionWidget } from "../../components/Widgets";
 import { PageVisitsTable } from "../../components/Tables";
@@ -27,7 +27,16 @@ useEffect(() => {
   return (
     <>
      
-  
+     <Breadcrumb
+        className="d-none d-md-inline-block"
+        listProps={{ className: "breadcrumb-dark breadcrumb-transparent" }}
+      >
+        <Breadcrumb.Item>
+          <FontAwesomeIcon icon={faHome} />
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+        <Breadcrumb.Item active>Statistiques</Breadcrumb.Item>
+      </Breadcrumb>  
         
         
       
@@ -131,10 +140,10 @@ useEffect(() => {
                 <Button  variant="link"
                 className="text-gray ms-auto"  onClick={
                     ()=>{
-                        setselectedTheme('Hotel')
-                        getSatatBytheme('hotel')
+                        setselectedTheme('Hôtel')
+                        getSatatBytheme('hôtels')
                     }
-                    }> <FontAwesomeIcon icon={faHotel} className="me-2" />Hotel</Button>
+                    }> <FontAwesomeIcon icon={faHotel} className="me-2" />Hôtel</Button>
                 </Col>
 
             </Row>

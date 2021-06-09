@@ -26,7 +26,7 @@ import { useHistory } from "react-router-dom";
 export const CreationQuestion = () => {
   let History = useHistory();
   const [showDefault, setShowDefault] = useState(false);
-  const handleClose = () => History.replace("/questions");
+  const handleClose = () => window.location.reload();
 
   const [Response, setResponse] = useState([]);
   const [UserName, setUserName] = useState("");
@@ -311,9 +311,10 @@ export const CreationQuestion = () => {
                           questionId: res.data.data.id,
                         }
                       );
-                      toast.success("Question créée avec succès ");
-                      window.location.reload();
+                     
                     });
+                    toast.success("Question créée avec succès ");
+                    window.location.reload();
                   })
 
                   .catch((err) => console.log(err));

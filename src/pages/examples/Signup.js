@@ -33,6 +33,14 @@ export default () => {
   const [password, setpassword] = useState();
   const [first_name, setname] = useState();
   const [last_name, setLastName] = useState();
+  const [signup, setsignup] = useState({
+    email:"",
+    password:"",
+    first_name:"",
+    last_name:"",
+    btnClicked: false,
+    
+  });
   return (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
@@ -62,10 +70,22 @@ export default () => {
                         type="text"
                         placeholder="Nom"
                         onChange={(e) => {
-                          setname(e.target.value);
+                          setsignup({
+                            ...signup,
+                         first_name: e.target.value,
+                          });
                         }}
                       />
                     </InputGroup>
+                    {signup.first_name == "" && signup.btnClicked && (
+                  <span
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    Veuillez remplir ce champ{" "}
+                  </span>
+                )}
                   </Form.Group>
                   <Form.Group id="lastname" className="mb-4">
                     <Form.Label>Prénom</Form.Label>
@@ -78,10 +98,22 @@ export default () => {
                         type="text"
                         placeholder="Prénom"
                         onChange={(e) => {
-                          setLastName(e.target.value);
+                          setsignup({
+                            ...signup,
+                          last_name: e.target.value,
+                          });
                         }}
                       />
                     </InputGroup>
+                    {signup.last_name == "" && signup.btnClicked && (
+                  <span
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    Veuillez remplir ce champ{" "}
+                  </span>
+                )}
                   </Form.Group>
                   <Form.Group id="email" className="mb-4">
                     <Form.Label>Email</Form.Label>
@@ -95,10 +127,22 @@ export default () => {
                         type="email"
                         placeholder="example@gmail.com"
                         onChange={(e) => {
-                          setemail(e.target.value);
+                          setsignup({
+                            ...signup,
+                         email: e.target.value,
+                          });
                         }}
                       />
                     </InputGroup>
+                    {signup.email == "" && signup.btnClicked && (
+                  <span
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    Veuillez remplir ce champ{" "}
+                  </span>
+                )}
                   </Form.Group>
                   <Form.Group id="password" className="mb-4">
                     <Form.Label>Mot de passe</Form.Label>
@@ -111,10 +155,22 @@ export default () => {
                         type="password"
                         placeholder="Mot de passe"
                         onChange={(e) => {
-                          setpassword(e.target.value);
+                          setsignup({
+                            ...signup,
+                          password: e.target.value,
+                          });
                         }}
                       />
                     </InputGroup>
+                    {signup.password == "" && signup.btnClicked && (
+                  <span
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    Veuillez remplir ce champ{" "}
+                  </span>
+                )}
                   </Form.Group>
                   <FormCheck type="checkbox" className="d-flex mb-4">
                     <FormCheck.Input required id="terms" className="me-2" />
@@ -127,6 +183,10 @@ export default () => {
                     variant="primary"
                     className="w-100"
                     onClick={() => {
+                        setsignup({
+                          ...signup,
+                          btnClicked: true,
+                        });
                       register(first_name, last_name, email, password)
                         .then((res) => {
                           localStorage.setItem(

@@ -31,6 +31,8 @@ export default () => {
   const [email, setemail] = useState();
   const [password, setpassword] = useState();
   const [sign, setsign] = useState({
+    email:"",
+    password:"",
     btnClicked: false,
     
   });
@@ -67,6 +69,15 @@ export default () => {
                         }}
                       />
                     </InputGroup>
+                    {sign.email == "" && sign.btnClicked && (
+                  <span
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    Veuillez remplir ce champ{" "}
+                  </span>
+                )}
                   </Form.Group>
                   <Form.Group>
                     <Form.Group id="password" className="mb-4">
@@ -85,13 +96,25 @@ export default () => {
                         />
                       </InputGroup>
                     
-                 
+                      {sign.password == "" && sign.btnClicked && (
+                  <span
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    Veuillez remplir ce champ{" "}
+                  </span>
+                )}
                     </Form.Group>
                   </Form.Group>
                   <Button
                     variant="primary"
                     className="w-100"
                     onClick={() => {
+                     /*  setsign({
+                        ...sign,
+                        btnClicked: true,
+                      }); */
                       login(email, password)
                         .then((res) => {
                           localStorage.setItem(

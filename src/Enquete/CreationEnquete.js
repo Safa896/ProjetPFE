@@ -21,7 +21,7 @@ import {useHistory } from "react-router-dom";
 export const CreationEnquete = () => {
   let History = useHistory ();
   const [showDefault, setShowDefault] = useState(false);
-  const handleClose = () => setShowDefault(false);
+  const handleClose = () => window.location.reload();
   const [questionsByTheme, setQuestionsByTheme] = useState([]);
   const [selectedTheme, setSelectedTheme] = useState("");
   const [enquete, setEnquete] = useState({

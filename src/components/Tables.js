@@ -32,8 +32,8 @@ import {
   ProgressBar,
   Pagination,
   ButtonGroup,
-  Modal,
   Form,
+  Modal,
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
@@ -54,7 +54,8 @@ import axios from "axios";
 import { baseURL } from "../Constantes/DefaultValue";
 import QRCode from "react-qr-code";
 import { useHistory } from "react-router-dom";
-
+import { TableRowQuestion } from "./QuestionRow";
+import { TableRowEnquete } from "./EnqueteRow";
 const ValueChange = ({ value, suffix }) => {
   const valueIcon = value < 0 ? faAngleDown : faAngleUp;
   const valueTxtColor = value < 0 ? "text-danger" : "text-success";
@@ -281,8 +282,8 @@ export const TransactionsTable = () => {
   const handleClose = () => setShowDefault(false);
   const Close = () => window.location.reload();
   const [showDefault1, setShowDefault1] = useState(false);
-  const [ModalisOpen, setModalisOpen] = useState(false);
   const handleClose1 = () => setShowDefault1(false);
+  const [ModalisOpen, setModalisOpen] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [dataFilter, setDataFilter] = useState({
     entitled: "",
@@ -297,7 +298,7 @@ export const TransactionsTable = () => {
   useEffect(() => {
     getAllQuestions().then((res) => {
       //console.log(res.data.data)
-      setquestions([...questions, res.data.data.reverse()]);
+      setquestions( res.data.data.reverse());
     });
   }, []);
   const handleClose2 = () => {
@@ -305,7 +306,7 @@ export const TransactionsTable = () => {
   };
   const search = (data) => {
     console.log(data);
-    const filtredData = questions[0].filter((question) => {
+    const filtredData = questions.filter((question) => {
       return (
         question.entitled.toUpperCase().includes(data.entitled.toUpperCase()) &&
         question.statut.toUpperCase().includes(data.statut.toUpperCase()) &&
@@ -314,8 +315,8 @@ export const TransactionsTable = () => {
       );
     });
     console.log(filtredData);
-    let q ={...questions[0]};
-    q[0] = filtredData;
+    let q ={...questions};
+    q = filtredData;
     setquestions(q);
   };
   const handleRefresh = () => {
@@ -327,245 +328,7 @@ export const TransactionsTable = () => {
     document.getElementById("theme").value = "";
     document.getElementById("statut").value = "";
   };
-  const TableRow = (props) => {
-    const {
-      id,
-      entitled,
-      creator,
-      entitled_response,
-      statut,
-      responses,
-      theme,
-      type,
-    } = props.question;
-    const [SelectedQues, setSelectedQues] = useState();
-    const statusVariant = statut === "Actif" ? "success" : "danger";
-    const updateFieldChanged = (index, state) => {
-      let q = props.question;
-      q = {
-        ...q,
-        statut: statut == "Inactif" ? "Actif" : "Inactif",
-      };
-      axios.put(baseURL + "questions/update/" + id, q).then((res) => {
-        toast.success("Question activée avec succès ");
-        window.location.reload();
-      });
-     
-    };
-    const updateFieldChangedInactive = (index, state) => {
-      let q = props.question;
-      q = {
-        ...q,
-        statut: statut == "Inactif" ? "Actif" : "Inactif",
-      };
-      axios.put(baseURL + "questions/update/" + id, q).then((res) => {
-        toast.success("Question désactivée avec succès ");
-        window.location.reload();
-      });
-      
-    };
   
-    return (
-      <tr>
-        <td>
-          <Card.Link as={Link} to={Routes.Invoice.path} className="fw-normal">
-            {entitled}
-          </Card.Link>
-        </td>
-        <td>
-          <span className="fw-normal">{entitled_response}</span>
-        </td>
-        <td>
-          <span className="fw-normal">{theme}</span>
-        </td>
-        <td>
-          <span className="fw-normal">{type}</span>
-        </td>
-        <td>
-          <span className="fw-normal">{responses.length}</span>
-        </td>
-        <td>
-          <span className={`fw-normal text-${statusVariant}`}>{statut}</span>
-        </td>
-        <Modal
-          as={Modal.Dialog}
-          centered
-          show={showDefault}
-          onHide={handleClose}
-        >
-          <Modal.Header>
-            <Modal.Title className="h6">Modifier une question </Modal.Title>
-            <Button variant="close" aria-label="Close" onClick={handleClose} />
-          </Modal.Header>
-          <ModificationQuestion
-            question1={{
-              entitled,
-              creator,
-              entitled_response,
-              statut,
-              responses,
-              theme,
-              type,
-              btnClicked: false,
-              id,
-            }}
-          />
-        </Modal>
-        <Modal
-          as={Modal.Dialog}
-          centered
-          show={showDefault1}
-          onHide={handleClose1}
-        >
-          <Modal.Header>
-            <Modal.Title className="h6">Visualiser une question </Modal.Title>
-            <Button variant="close" aria-label="Close" onClick={handleClose1} />
-          </Modal.Header>
-          <ViewQuestion
-            question={{
-              entitled,
-              creator,
-              entitled_response,
-              statut,
-              responses,
-              theme,
-              type,
-              id,
-            }}
-          />
-        </Modal>
-        <ToastContainer />
-        <td>
-          <Dropdown as={ButtonGroup}>
-            <Dropdown.Toggle
-              as={Button}
-              split
-              variant="link"
-              className="text-dark m-0 p-0"
-            >
-              <span className="icon icon-sm">
-                <FontAwesomeIcon icon={faEllipsisH} className="icon-dark" />
-              </span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {statut == "Inactif" && (
-                <div>
-                  <OverlayTrigger
-                    placement="left"
-                    trigger="click"
-                    overlay={
-                      <Popover>
-                        <Popover.Title>
-                          {" "}
-                          Confirmation de l'activation d’une question
-                        </Popover.Title>
-                        <Popover.Content>
-                          Etes-vous sûr de vouloir activer la question "
-                          {entitled} du thème {theme} ?
-                        </Popover.Content>
-                        <Button
-                          onClick={() => {
-                            updateFieldChanged();
-                          }}
-                        >
-                          Activer
-                        </Button>
-                        <Button variant="white" onClick={Close}>
-                          Annuler
-                        </Button>
-                      </Popover>
-                    }
-                  >
-                    <Button variant="white">
-                      <FontAwesomeIcon
-                        icon={faToggleOn}
-                        className="me-2"
-                        style={{ color: "green" }}
-                      />
-                      Activer
-                    </Button>
-                  </OverlayTrigger>
-                  <Dropdown.Item onClick={() => setShowDefault1(true)}>
-                    <FontAwesomeIcon icon={faEye} className="me-2" />
-                    Visualiser
-                  </Dropdown.Item>
-                </div>
-              )}
-              <div>
-                {statut === "Actif" && (
-                  <div>
-                    <OverlayTrigger
-                      placement="left"
-                      trigger="click"
-                      overlay={
-                        <Popover>
-                          <Popover.Title>
-                            Confirmation de la désactivation d’une question
-                          </Popover.Title>
-                          <Popover.Content>
-                            Etes-vous sûr de vouloir désactiver la question "
-                            {entitled} " du thème {theme} ?
-                          </Popover.Content>
-                          <Button
-                            onClick={() => {
-                              updateFieldChangedInactive();
-                            }}
-                          >
-                            Désactiver
-                          </Button>
-                          <Button variant="white" onClick={Close}>
-                            Annuler
-                          </Button>
-                        </Popover>
-                      }
-                    >
-                      <Button variant="white">
-                        <FontAwesomeIcon
-                          icon={faToggleOff}
-                          className="me-2"
-                          style={{ color: "red" }}
-                        />
-                        Désactiver
-                      </Button>
-                    </OverlayTrigger>
-
-                    <Dropdown.Item
-                      onClick={() => {
-                        setShowDefault(true);
-                        setSelectedQues(props.question);
-                      }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        className="me-2"
-                        style={{ color: "orange" }}
-                      />{" "}
-                      Modifier
-                    </Dropdown.Item>
-                  </div>
-                )}
-              </div>
-
-              <Dropdown.Item
-                className="text-danger"
-                onClick={() => {
-                  axios
-                    .delete(baseURL + "questions/delete/" + props.question.id)
-                    .then(
-                      (res) => toast.success("Question supprimée avec succès ")
-                      // window.location.reload()
-                    );
-                }}
-              >
-                <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Supprimer
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </td>
-      </tr>
-    );
-  };
-
   return (
     <Card border="light" className="table-wrapper table-responsive shadow-sm">
       <Dropdown>
@@ -738,11 +501,14 @@ export const TransactionsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {
-              questions[0]?.map((t) => (
-                <TableRow key={`${t.id}`} question={t} />
+            {questions?.length > 0 ? (
+              questions?.map((t) => (
+                <TableRowQuestion key={`${t.id}`} question={t} />
              
-            ))}
+                ))
+                ) : (
+                  <span style={{color:'red'}}>Aucun élément ne correspond à votre recherche </span>
+                )}
           </tbody>
         </Table>
         <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
@@ -763,9 +529,9 @@ export const TransactionsTable = () => {
   );
 };
 
-export const EnqueteTable = () => {
-  const [showDefault2, setShowDefault2] = useState(false);
-  const handleClose = () => setShowDefault2(false);
+export const EnqueteTable=() =>{
+  const [Modify, setModify] = useState(false);
+  const handleClose = () => setModify(false);
   const [showDefault1, setShowDefault1] = useState(false);
   const [ModalisOpen, setModalisOpen] = useState(false);
   const handleClose1 = () => setShowDefault1(false);
@@ -788,158 +554,7 @@ export const EnqueteTable = () => {
   const handleClose2 = () => {
     setAnchorEl(null);
   };
-  const TableRow = (props) => {
-    const { id, titre, etat } = props.enquete;
-    const statusVariant = etat === "Actif" ? "success" : "danger";
-
-    return (
-      <tr>
-        <td>
-          <Card.Link as={Link} to={Routes.Invoice.path} className="fw-normal">
-            {id}
-          </Card.Link>
-        </td>
-        <td>
-          <span className="fw-normal">{titre}</span>
-        </td>
-        <td>
-          <span className={`fw-normal text-${statusVariant}`}>{etat}</span>
-        </td>
-
-        <td>
-          {" "}
-          <span className="fw-normal">5</span>
-        </td>
-        <ToastContainer />
-        <Modal
-          as={Modal.Dialog}
-          centered
-          show={showDefault2}
-          onHide={handleClose}
-        >
-          <Modal.Header>
-            <Modal.Title className="h6">Modifier une enquête </Modal.Title>
-            <Button variant="close" aria-label="Close" onClick={handleClose} />
-          </Modal.Header>
-          <ModificationEnquete enquete={props.enquete} />
-        </Modal>
-        <Modal
-          as={Modal.Dialog}
-          centered
-          show={ModalLink}
-          onHide={() => {
-            setModalLink(false);
-          }}
-        >
-          <Modal.Body style={{}}>
-            <h2>Lien d'enquete</h2>
-            <p>{Linkk}</p>
-            <QRCode
-              value={"www.facebiik.com"}
-              size={100}
-              level={"L"}
-              style={{
-                width: 500,
-                height: 500,
-              }}
-            />
-          </Modal.Body>
-        </Modal>
-
-        <Modal
-          as={Modal.Dialog}
-          centered
-          show={showDefault1}
-          onHide={handleClose1}
-        >
-          <Modal.Header>
-            <Modal.Title className="h6">Visualiser une enquête </Modal.Title>
-            <Button variant="close" aria-label="Close" onClick={handleClose1} />
-          </Modal.Header>
-          <ViewEnquete enquete={props.enquete} />
-        </Modal>
-        <td>
-          <Dropdown as={ButtonGroup}>
-            <Dropdown.Toggle
-              as={Button}
-              split
-              variant="link"
-              className="text-dark m-0 p-0"
-            >
-              <span className="icon icon-sm">
-                <FontAwesomeIcon icon={faEllipsisH} className="icon-dark" />
-              </span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => setShowDefault1(true)}>
-                <FontAwesomeIcon icon={faEye} className="me-2" />
-                Visualiser
-              </Dropdown.Item>
-              {etat == "Brouillon" && (
-                <Dropdown.Item onClick={() => setShowDefault2(true)}>
-                  <FontAwesomeIcon
-                    icon={faEdit}
-                    className="me-2"
-                    style={{ color: "orange" }}
-                  />{" "}
-                  Modifier
-                </Dropdown.Item>
-              )}
-              {etat == "Actif" && (
-                <Dropdown.Item
-                  onClick={() => {
-                    var data = JSON.stringify({
-                      idEnquete: props.enquete.id,
-                    });
-
-                    var config = {
-                      method: "post",
-                      url: "http://localhost:5000/link/create",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      data: data,
-                    };
-
-                    axios(config)
-                      .then(function (response) {
-                        setLinkk(
-                          `http://192.168.1.15:5000/link/${response.data.data.url}`
-                        );
-                        setModalLink(true);
-                      })
-                      .catch(function (error) {
-                        console.log(error);
-                      });
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faLink}
-                    className="me-2"
-                    style={{ color: "grey" }}
-                  />
-                  Générer lien
-                </Dropdown.Item>
-              )}
-              <Dropdown.Item
-                className="text-danger"
-                onClick={() => {
-                  axios
-                    .delete(baseURL + "enquete/delete/" + props.enquete.id)
-                    .then((res) =>
-                      toast.success("Enquete supprimée avec succès ")
-                    );
-                }}
-              >
-                <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Supprimer
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </td>
-      </tr>
-    );
-  };
-
+  
   return (
     <Card border="light" className="table-wrapper table-responsive shadow-sm">
       <Card.Body className="pt-0">
@@ -955,7 +570,7 @@ export const EnqueteTable = () => {
           </thead>
           <tbody>
             {enquetes[0]?.map((t) => (
-              <TableRow key={`${t.id}`} enquete={t} />
+              <TableRowEnquete key={`${t.id}`} enquete={t} />
             ))}
           </tbody>
         </Table>

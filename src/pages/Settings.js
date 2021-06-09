@@ -99,7 +99,7 @@ export default () => {
       </div>
 
       <Row>
-        <EnqueteTable />
+     <EnqueteTable />
       </Row>
     </>
   );
