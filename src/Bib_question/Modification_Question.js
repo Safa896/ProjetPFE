@@ -30,14 +30,16 @@ export const ModificationQuestion = (props) => {
   const [Response, setResponse] = useState([]);
   let username = props.SingleQuestion.creator;
   let History = useHistory ();
-
+const updateQuestion =(e) =>{
+  
+}
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
        <ToastContainer />
       <Card.Body>
         <Form>
           <Row>
-            <Col md={6} className="mb-3">
+            <Col md={12} className="mb-3">
               <Form.Group id="firstName">
                 <Form.Label>Intitulé</Form.Label>
                 <Form.Control
@@ -63,34 +65,6 @@ export const ModificationQuestion = (props) => {
                 )}
               </Form.Group>
             </Col>
-            <Col md={6} className="mb-3">
-              <Form.Group id="lastName">
-                <Form.Label>Intitulé réponse</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Intitulé réponse"
-                  value={question}
-                  onChange={(e) => {
-                    setquestion({
-                      ...question,
-                      entitled_response: e.target.value,
-                    });
-                  }}
-                  value={question.entitled_response}
-                />
-                {question.entitled_response == "" && question.btnClicked && (
-                  <span
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    Veuillez remplir ce champ{" "}
-                  </span>
-                )}
-              </Form.Group>
-            </Col>
-
             <div className="file-field">
               <div>
                 <div className="d-flex">
@@ -188,6 +162,36 @@ export const ModificationQuestion = (props) => {
                         });
                     }}
                     checked={question.type === "Question motivante"}
+                  />
+                </Col>
+              </Form.Group>{" "}
+              <Form.Group as={Row} controlId="formHorizontalCheck">
+                <Col sm={{ span: 10, offset: 0.5 }}>
+                  <Form.Check
+                    label="Question ouverte"
+                    onChange={(e) => {
+                      if (e.target.checked)
+                        setquestion({
+                          ...question,
+                          type: "Question ouverte",
+                        });
+                    }}
+                    checked={question.type === "Question ouverte"}
+                  />
+                </Col>
+              </Form.Group>{" "}
+              <Form.Group as={Row} controlId="formHorizontalCheck">
+                <Col sm={{ span: 10, offset: 0.5 }}>
+                  <Form.Check
+                    label="Question sociodémographique"
+                    onChange={(e) => {
+                      if (e.target.checked)
+                        setquestion({
+                          ...question,
+                          type: "Question sociodémographique",
+                        });
+                    }}
+                    checked={question.type === "Question sociodémographique"}
                   />
                 </Col>
               </Form.Group>{" "}
@@ -314,7 +318,7 @@ export const ModificationQuestion = (props) => {
                   >
                     <FontAwesomeIcon
                       icon={faTrash}
-                      style={{ alignContent: "left" }}
+                      style={{ alignContent: "left" ,marginTop:26}}
                     />
                   </Button>
                 </Col>
@@ -330,7 +334,12 @@ export const ModificationQuestion = (props) => {
                   ...question,
                   btnClicked: true,
                 });
-
+                if (
+                  question.entitled !== "" &&
+                  question.type !== "" &&
+                  question.theme !== "" &&
+                  question.statut !== ""
+                ) {
                 axios
                   .put(
                     `http://localhost:5000/questions/update/${question.id}`,
@@ -349,10 +358,12 @@ export const ModificationQuestion = (props) => {
                           })
                           .then((res) => {});
                       });
+                      toast.success("Question modifiée avec succès "); 
+                      window.location.reload()
                   });
-                  toast.success("Question modifiée avec succès "); 
-                //  window.location.reload()
+                 
               }}
+            }
             >
               Modifier
             </Button>

@@ -44,7 +44,6 @@ import commands from "../data/commands";
 import { ToastContainer, toast } from "react-toastify";
 import ModificationQuestion from "../Bib_question/Modification_Question";
 import ViewQuestion from "../Bib_question/ViewQuestion";
-import CreationEnquete from "../Enquete/CreationEnquete";
 import ModificationEnquete from "../Enquete/ModificationEnquete";
 import ViewEnquete from "../Enquete/ViewEnquete";
 import MyVerticallyCenteredModal from "../Enquete/ModalLink";
@@ -62,6 +61,7 @@ import { useHistory } from "react-router-dom";
 export function TableRowEnquete (props) {
     const [Modify, setModify] = useState(false);
   const handleClose = () => setModify(false);
+  const Close = () => window.location.reload();
   const [showDefault1, setShowDefault1] = useState(false);
   const [ModalisOpen, setModalisOpen] = useState(false);
   const handleClose1 = () => setShowDefault1(false);
@@ -98,6 +98,7 @@ export function TableRowEnquete (props) {
           centered
           show={Modify}
           onHide={handleClose}
+          size="lg"
         >
           <Modal.Header>
             <Modal.Title className="h6">Modifier une enquête </Modal.Title>
@@ -112,6 +113,7 @@ export function TableRowEnquete (props) {
           onHide={() => {
             setModalLink(false);
           }}
+         
         >
           <Modal.Body style={{}}>
             <h2>Lien d'enquete</h2>
@@ -133,6 +135,7 @@ export function TableRowEnquete (props) {
           centered
           show={showDefault1}
           onHide={handleClose1}
+          size="lg"
         >
           <Modal.Header>
             <Modal.Title className="h6">Visualiser une enquête </Modal.Title>
@@ -203,18 +206,43 @@ export function TableRowEnquete (props) {
                   Générer lien
                 </Dropdown.Item>
               )}
-              <Dropdown.Item
-                className="text-danger"
-                onClick={() => {
-                  axios
-                    .delete(baseURL + "enquete/delete/" + props.enquete.id)
-                    .then((res) =>
-                      toast.success("Enquete supprimée avec succès ")
-                    );
-                }}
-              >
-                <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Supprimer
-              </Dropdown.Item>
+              <OverlayTrigger
+                    placement="left"
+                    trigger="click"
+                    overlay={
+                      <Popover>
+                       
+                        <Popover.Content>
+                          Voulez-vous vraiment supprimer?
+                        </Popover.Content>
+                        <Button
+                        variant="danger"
+                        size="sm"
+                          onClick={() => {
+                            axios
+                              .delete(baseURL + "enquete/delete/" + props.enquete.id)
+                              .then(
+                                (res) => 
+                                toast.success("Enquete supprimée avec succès "),
+                                window.location.reload()
+                              );
+                          }}
+                        >
+                          Supprimer
+                        </Button>
+                        <Button variant="white" onClick={Close}>
+                          Annuler
+                        </Button>
+                      </Popover>
+                    }
+                  >
+                    <Button variant="white">
+                      <FontAwesomeIcon
+                       icon={faTrashAlt} className="text-danger" 
+                      />
+                      Supprimer
+                    </Button>
+                  </OverlayTrigger>
             </Dropdown.Menu>
           </Dropdown>
         </td>

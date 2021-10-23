@@ -3,7 +3,7 @@ import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faChartArea, faChartBar, faChartLine, faFlagUsa, faFolderOpen, faGlobeEurope, faPaperclip, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { faAngular, faBootstrap, faReact, faVuejs } from "@fortawesome/free-brands-svg-icons";
-import { Col, Row, Card, Image, Button, ListGroup, ProgressBar } from '@themesberg/react-bootstrap';
+import { Col, Row, Card, Image, Button, ListGroup, ProgressBar ,Table} from '@themesberg/react-bootstrap';
 
 import Profile1 from "../assets/img/team/profile-picture-1.jpg";
 import ProfileCover from "../assets/img/profile-cover.jpg";
@@ -19,8 +19,6 @@ export const ViewQuestion = ({question}) => {
       
         <Card.Subtitle className="fw-normal">Intitulé:</Card.Subtitle>
         <Card.Text className="text-gray mb-4">{question.entitled}</Card.Text>
-        <Card.Subtitle className="fw-normal">Intitulé réponse:</Card.Subtitle>
-        <Card.Text className="text-gray mb-4">{question.entitled_response}</Card.Text>
         <Card.Subtitle className="fw-normal">Créateur:</Card.Subtitle>
         <Card.Text className="text-gray mb-4">{question.creator}</Card.Text>
         <Card.Subtitle className="fw-normal">Thème:</Card.Subtitle>
@@ -29,10 +27,28 @@ export const ViewQuestion = ({question}) => {
         <Card.Text className="text-gray mb-4">{question.type}</Card.Text>
         <Card.Subtitle className="fw-normal">Statut:</Card.Subtitle>
         <Card.Text className="text-gray mb-4">{question.statut}</Card.Text>
-        <Card.Subtitle className="fw-normal">Réponse:</Card.Subtitle>
-        {question.responses.map((res,i)=>(
-          <Card.Text className="text-gray mb-4" key={i}>{res.reponse}</Card.Text>
-        ))}
+        <Table>
+<thead className="thead-dark">
+
+<th>Réponse:</th>
+
+
+</thead>
+
+
+
+<tbody>
+{question.responses.map((res,i)=>(
+<tr key={i}>
+  <td>{res.reponse}</td>
+  
+  </tr>
+  ))
+}
+
+</tbody>
+</Table>
+        
       </Card.Body>
     </Card>
   );

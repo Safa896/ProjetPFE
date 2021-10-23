@@ -34,7 +34,7 @@ useEffect(() => {
         <Breadcrumb.Item>
           <FontAwesomeIcon icon={faHome} />
         </Breadcrumb.Item>
-        <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+        
         <Breadcrumb.Item active>Statistiques</Breadcrumb.Item>
       </Breadcrumb>  
         

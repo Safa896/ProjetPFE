@@ -28,7 +28,6 @@ questions.post("/create", upload.single("questionImage"), (req, res) => {
   const today = new Date();
   const newQuestion = new Question({
     entitled: req.body.entitled,
-    entitled_response: req.body.entitled_response,
     creator:req.body.creator,
     statut:req.body.statut,
     type: req.body.type,
@@ -91,9 +90,13 @@ questions.get("/getbytheme/:theme", async (req, res) => {
   const questionTheme = req.params.theme;
   const question = await Question.findAll({
     where: {
-      theme:questionTheme,
+      //theme:"Restaurant",
+    theme:questionTheme,
       statut:"Actif"
-    }
+    },
+    include:[
+      Response
+  ]
   });
   if (question) {
     res.status(200).send({

@@ -70,10 +70,7 @@ export default () => {
                         type="text"
                         placeholder="Nom"
                         onChange={(e) => {
-                          setsignup({
-                            ...signup,
-                         first_name: e.target.value,
-                          });
+                          setname(e.target.value);
                         }}
                       />
                     </InputGroup>
@@ -98,10 +95,7 @@ export default () => {
                         type="text"
                         placeholder="Prénom"
                         onChange={(e) => {
-                          setsignup({
-                            ...signup,
-                          last_name: e.target.value,
-                          });
+                          setLastName(e.target.value);
                         }}
                       />
                     </InputGroup>
@@ -127,10 +121,7 @@ export default () => {
                         type="email"
                         placeholder="example@gmail.com"
                         onChange={(e) => {
-                          setsignup({
-                            ...signup,
-                         email: e.target.value,
-                          });
+                          setemail(e.target.value);
                         }}
                       />
                     </InputGroup>
@@ -155,10 +146,7 @@ export default () => {
                         type="password"
                         placeholder="Mot de passe"
                         onChange={(e) => {
-                          setsignup({
-                            ...signup,
-                          password: e.target.value,
-                          });
+                          setpassword(e.target.value);
                         }}
                       />
                     </InputGroup>

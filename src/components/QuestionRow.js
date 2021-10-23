@@ -109,9 +109,7 @@ export  function TableRowQuestion (props)  {
             {entitled}
           </Card.Link>
         </td>
-        <td>
-          <span className="fw-normal">{entitled_response}</span>
-        </td>
+        
         <td>
           <span className="fw-normal">{theme}</span>
         </td>
@@ -129,6 +127,7 @@ export  function TableRowQuestion (props)  {
           centered
         show={showDefault}
           onHide={handleClose}
+          //size="lg"
         >
           <Modal.Header>
             <Modal.Title className="h6">Modifier une question </Modal.Title>
@@ -279,21 +278,44 @@ export  function TableRowQuestion (props)  {
                   </div>
                 )}
               </div>
-
-              <Dropdown.Item
-                className="text-danger"
-                onClick={() => {
-                  axios
-                    .delete(baseURL + "questions/delete/" + props.question.id)
-                    .then(
-                      (res) => 
-                      toast.success("Question supprimée avec succès "),
-                      window.location.reload()
-                    );
-                }}
-              >
-                <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Supprimer
-              </Dropdown.Item>
+              <OverlayTrigger
+                    placement="left"
+                    trigger="click"
+                    overlay={
+                      <Popover>
+                       
+                        <Popover.Content>
+                          Voulez-vous vraiment supprimer?
+                        </Popover.Content>
+                        <Button
+                        variant="danger"
+                        size="sm"
+                          onClick={() => {
+                            axios
+                              .delete(baseURL + "questions/delete/" + props.question.id)
+                              .then(
+                                (res) => 
+                                toast.success("Question supprimée avec succès "),
+                                window.location.reload()
+                              );
+                          }}
+                        >
+                          Supprimer
+                        </Button>
+                        <Button variant="white" onClick={Close}>
+                          Annuler
+                        </Button>
+                      </Popover>
+                    }
+                  >
+                    <Button variant="white">
+                      <FontAwesomeIcon
+                       icon={faTrashAlt} className="text-danger" 
+                      />
+                      Supprimer
+                    </Button>
+                  </OverlayTrigger>
+         
             </Dropdown.Menu>
           </Dropdown>
         </td>

@@ -61,7 +61,7 @@ export default () => {
           <Breadcrumb.Item>
             <FontAwesomeIcon icon={faHome} />
           </Breadcrumb.Item>
-          <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+          
           <Breadcrumb.Item active>Bibliothèque des questions</Breadcrumb.Item>
         </Breadcrumb>
       </div>

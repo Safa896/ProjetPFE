@@ -6,7 +6,7 @@ import { Col, Row, Image, Button, Container } from '@themesberg/react-bootstrap'
 import { Link } from 'react-router-dom';
 
 import { Routes } from "../../routes";
-import ErrorImage from "../../assets/img/illustrations/500.svg";
+import background from "../../assets/img/illustrations/background.jpg";
 
 
 export default () => {
@@ -17,18 +17,18 @@ export default () => {
           <Row className="align-items-center">
             <Col xs={12} lg={5} className="order-2 order-lg-1 text-center text-lg-left">
               <h1 className="text-primary mt-5">
-                Something has gone <span className="fw-bolder">seriously</span> wrong
+                Créer votre <span className="fw-bolder">questionnaire </span> en ligne
           </h1>
               <p className="lead my-4">
-                It's always time for a coffee break. We should be back by the time you finish your coffee.
+               Besoin de créer une enquête,un quiz facilement?Obtenez rapidement les réponses dont vous avez besoin
           </p>
-              <Button as={Link} variant="primary" className="animate-hover" to={Routes.DashboardOverview.path}>
+              <Button as={Link} variant="primary" className="animate-hover" to={Routes.Transactions.path}>
                 <FontAwesomeIcon icon={faChevronLeft} className="animate-left-3 me-3 ms-2" />
-                Go back home
+               Créer votre questionnaire 
               </Button>
             </Col>
             <Col xs={12} lg={7} className="order-1 order-lg-2 text-center d-flex align-items-center justify-content-center">
-              <Image src={ErrorImage} className="img-fluid w-75" />
+              <Image src={background} className="img-fluid w-75"  roundedCircle/>
             </Col>
           </Row>
         </Container>

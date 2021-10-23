@@ -185,7 +185,7 @@ export const ModificationEnquete = (enquete) => {
                   <div className="mt-3">
                     <Button
                       variant="primary"
-                      style={{ marginLeft: 89 }}
+                      style={{ marginLeft: 250 }}
                       onClick={(e) => {
                         UpdateEnquete(e, "Actif");
                       }}

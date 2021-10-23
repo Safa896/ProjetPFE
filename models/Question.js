@@ -13,10 +13,10 @@ module.exports = db.sequelize.define(
       type: Sequelize.STRING,
       required: true,
     },
-    entitled_response: {
+    /* entitled_response: {
       type: Sequelize.STRING,
       required: true,
-    },
+    }, */
     creator: {
       type: Sequelize.STRING,
     },

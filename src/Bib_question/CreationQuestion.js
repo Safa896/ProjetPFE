@@ -32,7 +32,6 @@ export const CreationQuestion = () => {
   const [UserName, setUserName] = useState("");
   const [question, setquestion] = useState({
     entitled: "",
-    entitled_response: "",
     type: "",
     theme: "",
     statut: "",
@@ -60,7 +59,7 @@ export const CreationQuestion = () => {
       <Card.Body>
         <Form>
           <Row>
-            <Col md={6} className="mb-3">
+            <Col md={12} className="mb-3">
               <Form.Group id="firstName">
                 <Form.Label>Intitulé</Form.Label>
                 <Form.Control
@@ -85,31 +84,7 @@ export const CreationQuestion = () => {
                 )}
               </Form.Group>
             </Col>
-            <Col md={6} className="mb-3">
-              <Form.Group id="lastName">
-                <Form.Label>Intitulé réponse</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Intitulé réponse"
-                  onChange={(e) => {
-                    setquestion({
-                      ...question,
-                      entitled_response: e.target.value,
-                    });
-                  }}
-                />
-                {question.entitled_response == "" && question.btnClicked && (
-                  <span
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    Veuillez remplir ce champ{" "}
-                  </span>
-                )}
-              </Form.Group>
-            </Col>
+            
 
             <div className="file-field">
               <div>
@@ -197,6 +172,34 @@ export const CreationQuestion = () => {
                         setquestion({
                           ...question,
                           type: "Question motivante",
+                        });
+                    }}
+                  />
+                </Col>
+              </Form.Group>{" "}
+              <Form.Group as={Row} controlId="formHorizontalCheck">
+                <Col sm={{ span: 10, offset: 0.5 }}>
+                  <Form.Check
+                    label="Question ouverte"
+                    onChange={(e) => {
+                      if (e.target.checked)
+                        setquestion({
+                          ...question,
+                          type: "Question ouverte",
+                        });
+                    }}
+                  />
+                </Col>
+              </Form.Group>{" "}
+              <Form.Group as={Row} controlId="formHorizontalCheck">
+                <Col sm={{ span: 12, offset: 0.5 }}>
+                  <Form.Check
+                    label="Question sociodémographique"
+                    onChange={(e) => {
+                      if (e.target.checked)
+                        setquestion({
+                          ...question,
+                          type: "Question sociodémographique",
                         });
                     }}
                   />
@@ -300,6 +303,12 @@ export const CreationQuestion = () => {
                   ...question,
                   btnClicked: true,
                 });
+                if (
+                  question.entitled !== "" &&
+                  question.type !== "" &&
+                  question.theme !== "" &&
+                  question.statut !== ""
+                ) {
                 createQuestion(question)
                   .then((res) => {
                     question.responses.map(async (response) => {
@@ -311,14 +320,15 @@ export const CreationQuestion = () => {
                           questionId: res.data.data.id,
                         }
                       );
-                     
-                    });
-                    toast.success("Question créée avec succès ");
+                      toast.success("Question créée avec succès ");
                     window.location.reload();
+                    });
+                   
                   })
 
                   .catch((err) => console.log(err));
               }}
+            }
             >
               Créer
             </Button>

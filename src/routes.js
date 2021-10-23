@@ -1,7 +1,7 @@
 
 export const Routes = {
     // pages
-    //Presentation: { path: "/" },
+    Presentation: { path: "/quiz" },
     DashboardOverview: { path: "/home" },
     Stat:{path:'/statistiques'},
     Transactions: { path: "/questions" },

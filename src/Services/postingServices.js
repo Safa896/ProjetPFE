@@ -3,14 +3,27 @@ import { baseURL } from "../Constantes/DefaultValue"
 
 export const createQuestion=(newQuestion)=>{
   console.log(newQuestion)
+  
    return axios.post(baseURL+'questions/create', {
+     
         entitled: newQuestion.entitled,
-        entitled_response: newQuestion.entitled_response,
         type: newQuestion.type,
         theme: newQuestion.theme,
         statut: newQuestion.statut,
         creator: newQuestion.creator,
         
+      })
+      
+  
+}
+
+export const createClient=(newClient)=>{
+  console.log(newClient)
+   return axios.post(baseURL+'client/create', {
+        nom: newClient.nom,
+        prenom: newClient.prenom,
+        age: newClient.age,
+       
       })
       
      

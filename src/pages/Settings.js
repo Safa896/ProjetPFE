@@ -44,7 +44,6 @@ export default () => {
         <Breadcrumb.Item>
           <FontAwesomeIcon icon={faHome} />
         </Breadcrumb.Item>
-        <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
         <Breadcrumb.Item active>Enquête</Breadcrumb.Item>
       </Breadcrumb>
 
@@ -64,6 +63,7 @@ export default () => {
           centered
           show={showDefault}
           onHide={handleClose}
+          size="lg"
         >
           <Modal.Header>
             <Modal.Title className="h6">Créer une enquête </Modal.Title>

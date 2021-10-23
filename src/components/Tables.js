@@ -492,7 +492,6 @@ export const TransactionsTable = () => {
           <thead>
             <tr>
               <th className="border-bottom">Intitulé</th>
-              <th className="border-bottom">Intitulé de réponse</th>
               <th className="border-bottom">Thème</th>
               <th className="border-bottom">Type</th>
               <th className="border-bottom">Nombre de réponses</th>

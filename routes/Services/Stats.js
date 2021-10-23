@@ -50,4 +50,5 @@ return response.findAll({
     
        
 })
+
 module.exports = Stats;

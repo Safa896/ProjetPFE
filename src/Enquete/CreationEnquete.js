@@ -64,7 +64,7 @@ export const CreationEnquete = () => {
   };
   return (
     <diV> <ToastContainer />
-    <Card border="light" className="bg-white shadow-sm mb-4">
+    <Card border="light" className="bg-white shadow-sm mb-4" style={{width:790}}>
       
       <Card.Body>
         <Form>
@@ -160,7 +160,7 @@ export const CreationEnquete = () => {
                 <div className="mt-3">
                   <Button
                     variant="primary"
-                    style={{ marginLeft: 89 }}
+                    style={{ marginLeft: 230 }}
                     onClick={(e) => {
                       setEnquete({ ...enquete, btnClicked: true });
                       handleSubmite(e, "Actif");
